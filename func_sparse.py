@@ -24,11 +24,17 @@ def save_cur_data(data):
 
 
 def put_log(data):
+    cur_path = os.path.dirname(
+        os.path.abspath(
+            __file__
+        )
+    )
     cur_date = datetime.datetime.today()
+    log_file_path = '{0}/logs/{1:%Y%m%d}.txt'.format(cur_path, cur_date)
     dump_date = json.dumps(data)
     put_str = '[{0:%H:%M:%S}]:{1}\n'.format(cur_date, dump_date)
 
-    with open('logs/{0:%Y%m%d}.txt'.format(cur_date), 'a') as f:
+    with open(log_file_path, 'a') as f:
         f.write(put_str)
     print(put_str)
 
