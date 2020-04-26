@@ -26,8 +26,11 @@ def save_cur_data(data):
 def put_log(data):
     cur_date = datetime.datetime.today()
     dump_date = json.dumps(data)
+    put_str = '[{0:%H:%M:%S}]:{1}\n'.format(cur_date, dump_date)
+
     with open('logs/{0:%Y%m%d}.txt'.format(cur_date), 'a') as f:
-        f.write('[{0:%H:%M:%S}]:{1}\n'.format(cur_date, dump_date))
+        f.write(put_str)
+    print(put_str)
 
 
 
@@ -73,4 +76,3 @@ def main():
 
 
 main()
-
