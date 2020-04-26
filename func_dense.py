@@ -12,7 +12,7 @@ def put_log(data):
 
 def post_value(data):
     put_log(data)
-    URL = 'https://us-central1-measureenvironments.cloudfunctions.net/addCO2'
+    URL = 'https://asia-northeast1-measureenvironments.cloudfunctions.net/addCO2'
     HEADERS = {
         'Content-type': 'application/json'
     }

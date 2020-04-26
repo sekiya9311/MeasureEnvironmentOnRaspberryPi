@@ -23,7 +23,7 @@ def save_cur_data(data):
 
 
 def post_value(data):
-    URL = 'https://us-central1-measureenvironments.cloudfunctions.net/addCO2'
+    URL = 'https://asia-northeast1-measureenvironments.cloudfunctions.net/addCO2'
     HEADERS = {
         'Content-type': 'application/json'
     }
