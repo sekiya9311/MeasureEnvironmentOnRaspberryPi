@@ -5,32 +5,28 @@ import urllib.request
 import time
 import datetime
 
-SAVE_FILE_NAME = 'save.txt'
+CUR_PATH = os.path.dirname(os.path.abspath(__file__))
+SAVE_FILE_PATH = '{0}/save.txt'.format(CUR_PATH)
 
 
 
 def get_prev_data():
-    if (not os.path.exists(SAVE_FILE_NAME)):
+    if (not os.path.exists(SAVE_FILE_PATH)):
         return {}
-    with open(SAVE_FILE_NAME, 'r') as f:
+    with open(SAVE_FILE_PATH, 'r') as f:
         return json.load(f)
 
 
 
 def save_cur_data(data):
-    with open(SAVE_FILE_NAME, 'w') as f:
+    with open(SAVE_FILE_PATH, 'w') as f:
         json.dump(data, f)
 
 
 
-def put_log(data):
-    cur_path = os.path.dirname(
-        os.path.abspath(
-            __file__
-        )
-    )
+def put_log(data, is_err = False):
     cur_date = datetime.datetime.today()
-    log_file_path = '{0}/logs/{1:%Y%m%d}.txt'.format(cur_path, cur_date)
+    log_file_path = '{0}/logs/{1:%Y%m%d}.txt'.format(CUR_PATH, cur_date)
     dump_date = json.dumps(data)
     put_str = '[{0:%H:%M:%S}]:{1}\n'.format(cur_date, dump_date)
 
