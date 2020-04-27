@@ -24,11 +24,15 @@ def save_cur_data(data):
 
 
 
-def put_log(data, is_err = False):
+def put_log(data, is_err):
     cur_date = datetime.datetime.today()
     log_file_path = '{0}/logs/{1:%Y%m%d}.txt'.format(CUR_PATH, cur_date)
     dump_date = json.dumps(data)
-    put_str = '[{0:%H:%M:%S}]:{1}\n'.format(cur_date, dump_date)
+    put_str = '[{0}][{1:%H:%M:%S}]:{2}\n'.format(
+        'ERROR' if is_err else 'INFO',
+        cur_date,
+        dump_date
+    )
 
     with open(log_file_path, 'a') as f:
         f.write(put_str)
@@ -37,7 +41,7 @@ def put_log(data, is_err = False):
 
 
 def post_value(data):
-    put_log(data)
+    put_log(data, False)
     URL = 'https://asia-northeast1-measureenvironments.cloudfunctions.net/addCO2'
     HEADERS = {
         'Content-type': 'application/json'
@@ -61,7 +65,11 @@ def interval(prev_data):
     if (cur_data.get('co2') == prev_data.get('co2')):  # use only co2
         return (False, cur_data)
 
-    post_value(cur_data)
+    try:
+        post_value(cur_data)
+    except Exception as ex:
+        put_log(ex, True)
+    
     return (True, cur_data)
 
 
