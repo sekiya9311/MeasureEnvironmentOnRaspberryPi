@@ -7,7 +7,7 @@ import os
 
 CUR_PATH = os.path.dirname(os.path.abspath(__file__))
 
-def put_log(data, is_err):
+def put_log(data: dict, is_err: bool) -> None:
     cur_date = datetime.datetime.today()
     log_file_path = '{0}/logs/{1:%Y%m%d}.txt'.format(CUR_PATH, cur_date)
     dump_date = json.dumps(data)
@@ -23,7 +23,7 @@ def put_log(data, is_err):
 
 
 
-def post_value(data):
+def post_value(data: dict) -> None:
     put_log(data, False)
     URL = 'https://asia-northeast1-measureenvironments.cloudfunctions.net/addCO2'
     HEADERS = {
@@ -41,7 +41,7 @@ def post_value(data):
 
 
 
-def interval():
+def interval() -> None:
     cur_data = mh_z19.read_all()
     try:
         post_value(cur_data)
@@ -50,7 +50,7 @@ def interval():
 
 
 
-def main():
+def main() -> None:
     while True:
         interval()
         time.sleep(10)

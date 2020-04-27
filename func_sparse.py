@@ -10,7 +10,7 @@ SAVE_FILE_PATH = '{0}/save.txt'.format(CUR_PATH)
 
 
 
-def get_prev_data():
+def get_prev_data() -> dict:
     if (not os.path.exists(SAVE_FILE_PATH)):
         return {}
     with open(SAVE_FILE_PATH, 'r') as f:
@@ -18,13 +18,13 @@ def get_prev_data():
 
 
 
-def save_cur_data(data):
+def save_cur_data(data: dict) -> None:
     with open(SAVE_FILE_PATH, 'w') as f:
         json.dump(data, f)
 
 
 
-def put_log(data, is_err):
+def put_log(data: dict, is_err: bool) -> None:
     cur_date = datetime.datetime.today()
     log_file_path = '{0}/logs/{1:%Y%m%d}.txt'.format(CUR_PATH, cur_date)
     dump_date = json.dumps(data)
@@ -40,7 +40,7 @@ def put_log(data, is_err):
 
 
 
-def post_value(data):
+def post_value(data: dict) -> None:
     put_log(data, False)
     URL = 'https://asia-northeast1-measureenvironments.cloudfunctions.net/addCO2'
     HEADERS = {
@@ -58,7 +58,7 @@ def post_value(data):
 
 
 
-def interval(prev_data):
+def interval(prev_data: dict) -> (bool, dict):
     cur_data = mh_z19.read_all()
     if (cur_data == prev_data):
         return (False, cur_data)
@@ -74,7 +74,7 @@ def interval(prev_data):
 
 
 
-def main():
+def main() -> None:
     cur_data = get_prev_data()
     while True:
         res = interval(cur_data)
