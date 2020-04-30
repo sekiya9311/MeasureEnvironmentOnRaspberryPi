@@ -53,7 +53,7 @@ def interval() -> None:
 def main() -> None:
     while True:
         interval()
-        time.sleep(10)
+        time.sleep(60)
 
 
 

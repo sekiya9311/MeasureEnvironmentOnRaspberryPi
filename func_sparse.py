@@ -81,7 +81,7 @@ def main() -> None:
         if (res[0]):
             cur_data = res[1]
             save_cur_data(cur_data)
-        time.sleep(10)
+        time.sleep(60)
 
 
 
