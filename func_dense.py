@@ -7,19 +7,24 @@ import os
 
 CUR_PATH = os.path.dirname(os.path.abspath(__file__))
 
-def put_log(data: dict, is_err: bool) -> None:
-    cur_date = datetime.datetime.today()
-    log_file_path = '{0}/logs/{1:%Y%m%d}.txt'.format(CUR_PATH, cur_date)
-    dump_date = json.dumps(data)
-    put_str = '[{0}][{1:%H:%M:%S}]:{2}\n'.format(
-        'ERROR' if is_err else 'INFO',
-        cur_date,
-        dump_date
-    )
+def put_log(data, is_err: bool, ignore_err: bool = False) -> None:
+    try:
+        cur_date = datetime.datetime.today()
+        log_file_path = '{0}/logs/{1:%Y%m%d}.txt'.format(CUR_PATH, cur_date)
+        dump_date = json.dumps(data)
+        put_str = '[{0}][{1:%H:%M:%S}]:{2}\n'.format(
+            'ERROR' if is_err else 'INFO',
+            cur_date,
+            dump_date
+        )
+        with open(log_file_path, 'a') as f:
+            f.write(put_str)
+        print(put_str)
 
-    with open(log_file_path, 'a') as f:
-        f.write(put_str)
-    print(put_str)
+    except Exception as ex:
+        if (ignore_err):
+            return
+        put_log(ex, True, True)
 
 
 
